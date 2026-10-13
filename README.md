@@ -1,17 +1,36 @@
-# ucpubg
+# TopUp UC PUBGM
 
-A new Flutter project.
+Aplikasi Flutter simulasi top up UC PUBG Mobile dengan state management **Provider**.
 
-## Getting Started
+## Fitur
+- Input Player ID (validasi 8-12 digit), pencarian dan pemilihan paket UC
+- Konfirmasi pesanan, pilih metode pembayaran, simulasi pembayaran
+- Riwayat transaksi (status Diproses -> Berhasil otomatis, filter, hapus satu/semua)
+- Profil (edit nama, statistik transaksi, saklar notifikasi)
 
-This project is a starting point for a Flutter application.
+## State Management: Provider
+| Konsep | Lokasi | Fungsi |
+|---|---|---|
+| `ChangeNotifier` | `lib/providers/topup_provider.dart` | Menyimpan state bersama + `notifyListeners()` |
+| `MultiProvider` + `ChangeNotifierProvider` | `lib/main.dart` | Mendaftarkan dan menyediakan `TopUpProvider` |
+| `Consumer` | Home, Riwayat, Profil | Rebuild UI saat state berubah |
+| `context.select` | `lib/pages/main_shell.dart` | Rebuild hanya jika tab aktif berubah |
+| `context.read` | Semua aksi (onTap, onPressed) | Memanggil fungsi provider tanpa mendengarkan |
 
-A few resources to get you started if this is your first Flutter project:
+## Struktur
+```
+lib/
+  main.dart
+  models/        paket_uc.dart, transaksi.dart
+  providers/     topup_provider.dart
+  pages/         main_shell.dart, home_page.dart, confirm_page.dart,
+                 riwayat_page.dart, profil_page.dart
+  utils/         format.dart
+```
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Menjalankan
+```
+flutter clean
+flutter pub get
+flutter run
+```
